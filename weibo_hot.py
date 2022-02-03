@@ -57,7 +57,8 @@ while True:
     '''read file'''
     hot_tiltle_save = read_write_file('r')
     t = time.localtime()
-    current_time = time.strftime("%Y%m%d", t)
+    origin_current_time = time.strftime("%Y%m%d%H", t)
+    current_time = time.strftime("%Y%m%d%H", t)
     len_page = 1
 
 
@@ -70,15 +71,13 @@ while True:
 
         save_or_not = True
         for i in range(4):
+            #use linear search to verify the page has saved or not
             save_or_not = linearsearch(hot_tiltle_save, len(hot_tiltle_save), hot_titles[i].text + '\n')
 
 
             if save_or_not == True:
                 hot_tiltle_save.append(hot_titles[i].text + '\n')
-                read_write_file('a', hot_titles[i].text)
-                print(hot_titles[i].text)
-                # search_icon = driver.find_element_by_class_name("woo-input-icon")#SearchIcon_icon_UJAst
-                # search_icon.click()         
+                print(hot_titles[i].text)       
                 search = driver.find_element_by_class_name("woo-input-main")
                 search.send_keys(Keys.CONTROL + "a")
                 search.send_keys(Keys.DELETE)
@@ -104,8 +103,8 @@ while True:
                 time.sleep(3)
 
                 t = time.localtime()
-                if time.strftime("%Y%m%d", t) != current_time:
-                    current_time = time.strftime("%Y%m%d", t)
+                if time.strftime("%Y%m%d%H", t) != current_time:
+                    current_time = time.strftime("%Y%m%d%H", t)
 
                 #rename part
                 for k in range(4):
@@ -122,6 +121,7 @@ while True:
                     pyautogui.press('tab')
                 pyautogui.press('enter')
                 time.sleep(3)
+                read_write_file('a', hot_titles[i].text)    #write to the news list
 
 
                 #close the sub page
@@ -130,6 +130,8 @@ while True:
         
         time.sleep(10)
 
-        if len(driver.window_handles) >= 11:
+        t = time.localtime()
+        current_time = time.strftime("%Y%m%d%H", t)
+        if len(driver.window_handles) >= 11 or int(current_time) == int(origin_current_time) + 3:
             driver.close()
             break
