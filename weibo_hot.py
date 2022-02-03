@@ -23,6 +23,7 @@ def linearsearch(arr, n, x):
 
 def read_write_file(type, write_data = None):
     file_path = 'D:/NTUST/Side_Project/Bilingual_weibo/news_list.txt'
+    # file_path = 'E:/家裡電腦資料/Bernie/Bilingual_weibo/news_list.txt'
     if type == 'r':
         f = open(file_path, 'r', encoding="utf-8") #u must add encoding parameter
         arr = []
@@ -41,6 +42,7 @@ def read_write_file(type, write_data = None):
 while True:
     '''initial the driver'''
     PATH = 'D:/NTUST/Side_Project/Bilingual_weibo/chromedriver.exe'
+    # PATH = 'E:/家裡電腦資料/Bernie/Bilingual_weibo/chromedriver.exe'
     driver = webdriver.Chrome(PATH)
     driver.get('https://weibo.com/hot/weibo/102803')
     WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.ID, "app")))
@@ -57,8 +59,8 @@ while True:
     '''read file'''
     hot_tiltle_save = read_write_file('r')
     t = time.localtime()
-    origin_current_time = time.strftime("%Y%m%d%H", t)
-    current_time = time.strftime("%Y%m%d%H", t)
+    origin_current_time = time.strftime("%Y%m%d%H%M", t)
+    current_time = time.strftime("%Y%m%d%H%M", t)
     len_page = 1
 
 
@@ -70,18 +72,19 @@ while True:
         hot_titles = driver.find_elements_by_class_name("HotTopic_tit_eS4fv")
 
         save_or_not = True
-        for i in range(4):
+        for i in range(1, 4):
             #use linear search to verify the page has saved or not
             save_or_not = linearsearch(hot_tiltle_save, len(hot_tiltle_save), hot_titles[i].text + '\n')
 
 
             if save_or_not == True:
                 hot_tiltle_save.append(hot_titles[i].text + '\n')
-                print(hot_titles[i].text)       
+                print(hot_titles[i].text)
+                read_write_file('a', hot_titles[i].text)    #write to the news list
                 search = driver.find_element_by_class_name("woo-input-main")
                 search.send_keys(Keys.CONTROL + "a")
                 search.send_keys(Keys.DELETE)
-                search.send_keys(hot_tiltle_save[-1])
+                search.send_keys(hot_titles[i].text)
                 time.sleep(2)
                 while len(driver.window_handles) == len_page:
                     search.send_keys(Keys.RETURN)   #to make sure the new page has redirected
@@ -103,8 +106,8 @@ while True:
                 time.sleep(3)
 
                 t = time.localtime()
-                if time.strftime("%Y%m%d%H", t) != current_time:
-                    current_time = time.strftime("%Y%m%d%H", t)
+                if time.strftime("%Y%m%d%H%M", t) != current_time:
+                    current_time = time.strftime("%Y%m%d%H%M", t)
 
                 #rename part
                 for k in range(4):
@@ -121,7 +124,6 @@ while True:
                     pyautogui.press('tab')
                 pyautogui.press('enter')
                 time.sleep(3)
-                read_write_file('a', hot_titles[i].text)    #write to the news list
 
 
                 #close the sub page
@@ -131,7 +133,8 @@ while True:
         time.sleep(10)
 
         t = time.localtime()
-        current_time = time.strftime("%Y%m%d%H", t)
-        if len(driver.window_handles) >= 11 or int(current_time) == int(origin_current_time) + 3:
+        current_time = time.strftime("%Y%m%d%H%M", t)
+        #when the programm run through 3 mins or 1 hr then restart the driver
+        if len(driver.window_handles) >= 11 or int(current_time) == int(origin_current_time) + 3 or int(current_time) % 100 == 0:
             driver.close()
             break
