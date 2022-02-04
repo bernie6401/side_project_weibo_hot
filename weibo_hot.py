@@ -45,7 +45,11 @@ while True:
     # PATH = 'E:/家裡電腦資料/Bernie/Bilingual_weibo/chromedriver.exe'
     driver = webdriver.Chrome(PATH)
     driver.get('https://weibo.com/hot/weibo/102803')
-    WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.ID, "app")))
+    try:
+        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.ID, "app")))
+    except:
+        driver.close()
+        continue
     driver.maximize_window()
 
 
@@ -68,7 +72,11 @@ while True:
     while True:
         '''refresh the page'''
         hot_new_tap.click()
-        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, "HotTopic_tit_eS4fv")))
+        try:
+            WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, "HotTopic_tit_eS4fv")))
+        except:
+            driver.close()
+            break
         hot_titles = driver.find_elements_by_class_name("HotTopic_tit_eS4fv")
 
         save_or_not = True
@@ -94,7 +102,11 @@ while True:
                 #change the sub page
                 print(driver.current_window_handle)
                 driver.switch_to.window(driver.window_handles[-1])
-                WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "card-act")))
+                try:
+                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "card-act")))
+                except:
+                    driver.refresh()
+                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "card-act")))
                 search = driver.find_element_by_class_name("woo-input-main")
                 search.send_keys(Keys.CONTROL + "a")
                 search.send_keys(Keys.CONTROL + "c")
