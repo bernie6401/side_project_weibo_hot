@@ -11,7 +11,7 @@
 
 > 2. Make sure your desktop is the idle one in your home that you'll not use it for a while.
 
-> 3. 
+> 3. Make sure your desktop language keyboard is for English.
 
 
 ***
@@ -22,8 +22,6 @@
 > 2. Maybe someone can write about the login part that not only needs account and password but the id verification. This is very hard to solve in this system.
 
 > 3. Someone can use a more efficient searching Algorithm instead of linear searching and clean up the news list in the file to speed up the searching time. For instance, clean up all titles saved a week ago and always make the list lighter.
->
->    
->
-> 4. To be continued...
+
+>    4. To be continued...
 
