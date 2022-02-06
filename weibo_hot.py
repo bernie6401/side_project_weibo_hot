@@ -22,8 +22,8 @@ def linearsearch(arr, n, x):
 
 
 def read_write_file(type, write_data = None):
-    file_path = 'D:/NTUST/Side_Project/Bilingual_weibo/news_list.txt'
-    # file_path = 'E:/家裡電腦資料/Bernie/Bilingual_weibo/news_list.txt'
+    #file_path = 'D:/NTUST/Side_Project/Bilingual_weibo/news_list.txt'
+    file_path = 'E:/家裡電腦資料/Bernie/Bilingual_weibo/news_list.txt'
     if type == 'r':
         f = open(file_path, 'r', encoding="utf-8") #u must add encoding parameter
         arr = []
@@ -35,20 +35,24 @@ def read_write_file(type, write_data = None):
         f = open(file_path, 'a', encoding='UTF-8')
         f.write(write_data + '\n')
         f.close()
+    elif type == 'refresh':
+        f = open(file_path, 'w', encoding='UTF-8')
+        f.write('')
+        f.close()
 
     
 
 
 while True:
     '''initial the driver'''
-    PATH = 'D:/NTUST/Side_Project/Bilingual_weibo/chromedriver.exe'
-    # PATH = 'E:/家裡電腦資料/Bernie/Bilingual_weibo/chromedriver.exe'
+    #PATH = 'D:/NTUST/Side_Project/Bilingual_weibo/chromedriver.exe'
+    PATH = 'E:/家裡電腦資料/Bernie/Bilingual_weibo/chromedriver.exe'
     driver = webdriver.Chrome(PATH)
     driver.get('https://weibo.com/hot/weibo/102803')
     try:
         WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.ID, "app")))
     except:
-        driver.quit()
+        driver.close()
         continue
     driver.maximize_window()
 
@@ -75,7 +79,7 @@ while True:
         try:
             WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, "HotTopic_tit_eS4fv")))
         except:
-            driver.quit()
+            driver.close()
             break
         hot_titles = driver.find_elements_by_class_name("HotTopic_tit_eS4fv")
 
@@ -144,9 +148,12 @@ while True:
         
         time.sleep(10)
 
+        if int(current_time) % 10000 == 0:
+            read_write_file('refresh')
+
         t = time.localtime()
         current_time = time.strftime("%Y%m%d%H%M", t)
         #when the programm run through 3 mins or 1 hr then restart the driver
         if len(driver.window_handles) >= 11 or int(current_time) == int(origin_current_time) + 1 or int(current_time) % 100 == 0:
-            driver.quit()
+            driver.close()
             break
