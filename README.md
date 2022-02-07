@@ -6,13 +6,20 @@
 
 ***
 
+## Installation
+```bash
+pip install pyautogui
+pip install selenium
+```
+
+***
+
 ## Some Set-Up
 > 1. Make sure your web driver is the latest version. You can download it here(https://chromedriver.chromium.org/)
 
 > 2. Make sure your desktop is the idle one in your home that you'll not use it for a while.
 
 > 3. Make sure your desktop language keyboard is for English.
-
 
 ***
 
