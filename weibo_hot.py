@@ -52,7 +52,7 @@ while True:
     try:
         WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.ID, "app")))
     except:
-        driver.close()
+        driver.quit()
         continue
     driver.maximize_window()
 
@@ -79,7 +79,7 @@ while True:
         try:
             WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, "HotTopic_tit_eS4fv")))
         except:
-            driver.close()
+            driver.quit()
             break
         hot_titles = driver.find_elements_by_class_name("HotTopic_tit_eS4fv")
 
@@ -155,5 +155,5 @@ while True:
         current_time = time.strftime("%Y%m%d%H%M", t)
         #when the programm run through 3 mins or 1 hr then restart the driver
         if len(driver.window_handles) >= 11 or int(current_time) == int(origin_current_time) + 1 or int(current_time) % 100 == 0:
-            driver.close()
+            driver.quit()
             break
