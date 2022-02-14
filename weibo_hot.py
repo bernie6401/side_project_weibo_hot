@@ -154,6 +154,6 @@ while True:
         t = time.localtime()
         current_time = time.strftime("%Y%m%d%H%M", t)
         #when the programm run through 3 mins or 1 hr then restart the driver
-        if len(driver.window_handles) >= 11 or int(current_time) == int(origin_current_time) + 1 or int(current_time) % 100 == 0:
+        if len(driver.window_handles) >= 11 or int(current_time) == int(origin_current_time) + 2 or int(current_time) % 100 == 0:
             driver.quit()
             break
