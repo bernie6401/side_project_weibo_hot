@@ -24,11 +24,13 @@ pip install selenium
 ***
 
 ## Something can solve in the future
-> 1. The content data you download may not be the same as the latest because I just verify the hot news title before downloading.(Solved, I refresh the news_list.txt everyday and then the page with the same title will download again.)
+> 1. The content data you download may not be the same as the latest because I just verify the hot news title before downloading.(Solved, I refresh the news_list.txt every day and then the page with the same title will download again.)
 
 > 2. Maybe someone can write about the login part that not only needs account and password but the id verification. This is very hard to solve in this system.
 
 > 3. Someone can use a more efficient searching Algorithm instead of linear searching and clean up the news list in the file to speed up the searching time. For instance, clean up all titles saved a week ago and always make the list lighter.
 
-> 4. To be continued...
+> 4. When you refresh the page many times, the server will reject the request from your desktop. So I add a file named run.py to solve this problem that used subprocess function independently in a while loop. That can lead the web to close completely and reboot again and again.
+
+> 5. To be continued...
 
