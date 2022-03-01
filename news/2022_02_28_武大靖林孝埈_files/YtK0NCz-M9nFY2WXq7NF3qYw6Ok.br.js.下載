@@ -1,0 +1,1 @@
+(function(){function i(){t||(t=_ge("id_phead"));n||(n=_ge("id_h"));var i=_w.pageYOffset;n&&t&&(i>50?(Lib.CssClass.add(n,"id_hidden"),Lib.CssClass.remove(n,"id_visible")):(Lib.CssClass.remove(n,"id_hidden"),Lib.CssClass.add(n,"id_visible")))}var n,t;sj_be(_d,"scroll",i)})()
