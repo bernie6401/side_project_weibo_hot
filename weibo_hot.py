@@ -13,6 +13,14 @@ from selenium.webdriver.common.action_chains import ActionChains
 '''to do some keyboard instruction-'''
 import pyautogui
 import time
+# import pyautogui
+# import pyperclip
+options = webdriver.ChromeOptions()
+options.add_experimental_option("excludeSwitches", ["enable-automation"])
+options.add_experimental_option('useAutomationExtension', False)
+options.add_experimental_option("prefs", {"profile.password_manager_enabled": False, "credentials_enable_service": False})
+
+
 
 def linearsearch(arr, n, x):
     for i in range(0, n):
@@ -47,8 +55,11 @@ def read_write_file(type, write_data = None):
 '''initial the driver'''
 PATH = 'D:/NTUST/Side_Project/Bilingual_weibo/chromedriver.exe'
 # PATH = 'E:/家裡電腦資料/Bernie/Bilingual_weibo/chromedriver.exe'
-driver = webdriver.Chrome(PATH)
-driver.get('https://weibo.com/hot/weibo/102803')
+driver = webdriver.Chrome(PATH, chrome_options=options)
+driver.get('https://weibo.com/hot/weibo/')
+wait = WebDriverWait(driver,5)
+#重要：暂停1分钟进行预登陆，此处填写账号密码及验证
+time.sleep(60)
 try:
     WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.ID, "app")))
 except:
