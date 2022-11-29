@@ -1,5 +1,9 @@
 # side_project_weibo_hot
 
+###### tags: `Side Project` `Browser Automation` `Selenium`
+:::spoiler
+[TOC]
+:::
 ## Side Project Background
 * Inspired by Bilingual Podcast is the best podcast channel in Taiwan that introduces interesting news happening around the world. They said they had a problem that they can not get the hot news from Weibo immediately before Xi made it disappear. For instance, Shuai Peng(彭帥) and Zhang Gaoli(張高麗) event. So, I wrote a side project about an automatic web system that can refresh the web page and download it automatically and keep the data safe.
 
@@ -29,3 +33,16 @@ pip install selenium
 * The web driver will shut down when the times up. But that will make the downloading file be aborted. So, maybe someone can add a function to detect whether the download process succeed or not.
 
 * To be continued...
+
+## Update
+* Time: 2022-11-29
+    * In addition to update chrome driver, I also tried to run the whole program but not work because of the **wrong redirection** of weibo webpage.
+The page I expected is shown as below.![weibo page I expect](https://imgur.com/G6p2qEu.png)
+But actually, drive got the page as below →
+![actual page it shown](https://imgur.com/phlJ6Ov.png)
+In order to execute my program with slightly revise, I add these line to login.
+        ```python=59
+        wait = WebDriverWait(driver,5)
+        time.sleep(60)
+        ```
+        :writing_hand:**Notes** This program became a semi-automatic features.
